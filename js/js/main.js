@@ -1,281 +1,405 @@
 /**
  * ============================================================
- * Xerfan Tech Lab - main.js v10.0 (MOBILE & DESKTOP SYNC)
+ * Xerfan Tech Lab — main.js v11.0
+ * Módulos: Componentes · Header · Contadores · TypeWriter
+ *          ScrollReveal · ScrollProgress · Chatbot XTL
  * ============================================================
  */
 
 'use strict';
 
-// 1. CARREGAMENTO DE COMPONENTES
+/* ============================================================
+   1. CARREGAMENTO DE COMPONENTES HTML
+   ============================================================ */
 function loadComponent(elementId, componentPath) {
     const element = document.getElementById(elementId);
     if (!element) return Promise.resolve();
 
     return fetch(componentPath)
-        .then(res => res.text())
+        .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.text();
+        })
         .then(html => {
             element.innerHTML = html;
-            
             if (elementId === 'header') {
-                initHeaderLogic();
-                aplicarTravasVisibilidade();
-                // Inicia o chatbot SEMPRE que o header carregar
-                if (!window.location.pathname.includes('admin')) {
-                    new XerfanSmartBot();
+                _initHeader();
+                _initAdminToggles();
+                if (!window.location.pathname.includes('/admin')) {
+                    new XerfanChatBot();
                 }
             }
         })
-        .catch(err => console.warn(`Erro no componente: ${componentPath}`, err));
+        .catch(err => console.warn(`[XTL] Componente não carregado: ${componentPath}`, err));
 }
 
-// 2. LÓGICA DO HEADER (Menu Mobile, Scroll, Topo)
-function initHeaderLogic() {
-    const header = document.getElementById('main-header');
-    const navWrapper = document.getElementById('nav-wrapper');
-    const backTop = document.getElementById('back-to-top');
+/* ============================================================
+   2. LÓGICA DO HEADER
+   ============================================================ */
+function _initHeader() {
+    const header    = document.getElementById('main-header');
+    const navWrap   = document.getElementById('nav-wrapper');
+    const backTop   = document.getElementById('back-to-top');
     const mobileBtn = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
+    const mobileMenu= document.getElementById('mobile-menu');
+    const menuIcon  = document.getElementById('menu-icon');
+    const progress  = document.getElementById('scroll-progress');
 
-    // Listener de Scroll Único
-    window.addEventListener('scroll', () => {
-        const scrollY = window.pageYOffset;
+    // Scroll único — scroll progress + header scrolled + back-to-top
+    const onScroll = () => {
+        const y = window.scrollY;
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
 
-        if (scrollY > 60) {
+        if (progress && maxY > 0) {
+            progress.style.width = `${(y / maxY) * 100}%`;
+        }
+
+        if (y > 60) {
             header?.classList.add('scrolled');
-            navWrapper?.classList.add('py-0', 'bg-gray-900/95', 'shadow-md');
+            navWrap?.classList.add('py-0', 'shadow-md');
         } else {
             header?.classList.remove('scrolled');
-            navWrapper?.classList.remove('py-0', 'bg-gray-900/95', 'shadow-md');
+            navWrap?.classList.remove('py-0', 'shadow-md');
         }
 
         if (backTop) {
-            if (scrollY > 400) {
-                backTop.classList.remove('opacity-0', 'invisible');
-                backTop.classList.add('opacity-100', 'visible');
-            } else {
-                backTop.classList.add('opacity-0', 'invisible');
-                backTop.classList.remove('opacity-100', 'visible');
-            }
+            const show = y > 400;
+            backTop.classList.toggle('opacity-0',   !show);
+            backTop.classList.toggle('invisible',   !show);
+            backTop.classList.toggle('opacity-100',  show);
+            backTop.classList.toggle('visible',      show);
         }
-    }, { passive: true });
+    };
 
-    backTop?.addEventListener('click', (e) => {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // executa imediatamente ao carregar
+
+    backTop?.addEventListener('click', e => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Toggle Menu Mobile
+    // Toggle menu mobile
     let menuOpen = false;
     mobileBtn?.addEventListener('click', () => {
         menuOpen = !menuOpen;
-        if (menuOpen) {
-            mobileMenu?.classList.remove('hidden');
-            if (menuIcon) menuIcon.className = 'fas fa-times text-base text-orange-500';
-        } else {
-            mobileMenu?.classList.add('hidden');
-            if (menuIcon) menuIcon.className = 'fas fa-bars text-base';
+        mobileMenu?.classList.toggle('hidden', !menuOpen);
+        if (menuIcon) {
+            menuIcon.className = menuOpen
+                ? 'fas fa-times text-base text-orange-500'
+                : 'fas fa-bars text-base';
         }
     });
 
-    // Link Ativo
+    // Fechar menu ao clicar em link mobile
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuOpen = false;
+            mobileMenu.classList.add('hidden');
+            if (menuIcon) menuIcon.className = 'fas fa-bars text-base';
+        });
+    });
+
+    // Marcar link ativo
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-item-pro[data-page], .mobile-nav-item[data-page]').forEach(l => {
-        if (l.getAttribute('data-page') === currentPage) l.classList.add('active');
+    document.querySelectorAll('.nav-item-pro[data-page], .mobile-nav-item[data-page]').forEach(link => {
+        if (link.dataset.page === currentPage) link.classList.add('active');
     });
 }
 
-// 3. TRAVAS DE ADMIN
-async function aplicarTravasVisibilidade() {
+/* ============================================================
+   3. TOGGLES DE PÁGINAS (Firebase — Admin)
+   ============================================================ */
+async function _initAdminToggles() {
     try {
-        const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js");
-        const { getFirestore, doc, onSnapshot } = await import("https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js");
-        const { app } = await import("./firebase-config.js");
-        const dbToggle = getFirestore(initializeApp(app.options, "XerfanToggleApp"));
+        const { app }         = await import('./firebase-config.js');
+        const { getFirestore, doc, onSnapshot } = await import('https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js');
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js');
+        const dbToggle = getFirestore(initializeApp(app.options, 'XerfanToggleApp_v2'));
 
-        onSnapshot(doc(dbToggle, "settings", "paginas"), (snap) => {
-            if (snap.exists()) {
-                const status = snap.data();
-                ['produtos', 'servicos', 'portfolio', 'blog'].forEach(modulo => {
-                    const ativo = status[`${modulo}_active`] ?? true;
-                    document.querySelectorAll(`.nav-link-${modulo}`).forEach(l => l.style.display = ativo ? '' : 'none');
-                    const secaoHome = document.getElementById(`secao-${modulo}`);
-                    if (secaoHome) secaoHome.style.display = ativo ? '' : 'none';
-                });
-            }
+        onSnapshot(doc(dbToggle, 'settings', 'paginas'), snap => {
+            if (!snap.exists()) return;
+            const s = snap.data();
+            ['produtos', 'servicos', 'portfolio', 'blog'].forEach(mod => {
+                const ativo = s[`${mod}_active`] ?? true;
+                document.querySelectorAll(`.nav-link-${mod}`).forEach(el => el.style.display = ativo ? '' : 'none');
+                const sec = document.getElementById(`secao-${mod}`);
+                if (sec) sec.style.display = ativo ? '' : 'none';
+            });
         });
-    } catch (e) { console.error("Erro travas:", e); }
+    } catch (e) {
+        console.warn('[XTL] Toggles de admin indisponíveis.', e.message);
+    }
 }
 
-// 4. UTILITÁRIOS
+/* ============================================================
+   4. CONTADORES ANIMADOS
+   ============================================================ */
 function initCounters() {
     const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target, target = parseInt(el.dataset.counter, 10), suffix = el.dataset.suffix || '';
-                let start = null;
-                const step = ts => {
-                    if (!start) start = ts;
-                    const progress = Math.min((ts - start) / 2000, 1);
-                    el.textContent = Math.floor((1 - Math.pow(1 - progress, 3)) * target) + suffix;
-                    if (progress < 1) requestAnimationFrame(step); else el.textContent = target + suffix;
-                };
-                requestAnimationFrame(step);
-                observer.unobserve(el);
-            }
+        entries.forEach(({ isIntersecting, target }) => {
+            if (!isIntersecting) return;
+            const end    = parseInt(target.dataset.counter, 10);
+            const suffix = target.dataset.suffix || '';
+            const dur    = 2000;
+            let startTs  = null;
+
+            const ease = t => 1 - Math.pow(1 - t, 3); // cubic ease-out
+
+            const step = ts => {
+                if (!startTs) startTs = ts;
+                const prog = Math.min((ts - startTs) / dur, 1);
+                target.textContent = Math.floor(ease(prog) * end) + suffix;
+                if (prog < 1) requestAnimationFrame(step);
+                else target.textContent = end + suffix;
+            };
+
+            requestAnimationFrame(step);
+            observer.unobserve(target);
         });
     }, { threshold: 0.5 });
-    document.querySelectorAll('[data-counter]').forEach(c => observer.observe(c));
+
+    document.querySelectorAll('[data-counter]').forEach(el => observer.observe(el));
 }
 
+/* ============================================================
+   5. TYPEWRITER
+   ============================================================ */
 class TypeWriter {
-    constructor(el, textos) { this.el = el; this.textos = textos; this.index = 0; this.char = 0; this.modo = 'escrever'; this.loop(); }
-    loop() {
-        const txt = this.textos[this.index];
-        if (this.modo === 'escrever') {
+    constructor(el, texts, { speed = 45, deleteSpeed = 28, pauseMs = 2500 } = {}) {
+        this.el          = el;
+        this.texts       = texts;
+        this.speed       = speed;
+        this.deleteSpeed = deleteSpeed;
+        this.pauseMs     = pauseMs;
+        this.index       = 0;
+        this.char        = 0;
+        this.mode        = 'write';
+        this._tick();
+    }
+
+    _tick() {
+        const txt = this.texts[this.index];
+
+        if (this.mode === 'write') {
             this.el.textContent = txt.slice(0, ++this.char);
-            if (this.char === txt.length) { this.modo = 'pausar'; setTimeout(() => { this.modo = 'apagar'; this.loop(); }, 2500); } 
-            else setTimeout(() => this.loop(), 40 + Math.random() * 20);
-        } else if (this.modo === 'apagar') {
+            if (this.char === txt.length) {
+                this.mode = 'pause';
+                setTimeout(() => { this.mode = 'erase'; this._tick(); }, this.pauseMs);
+            } else {
+                setTimeout(() => this._tick(), this.speed + Math.random() * 20);
+            }
+
+        } else if (this.mode === 'erase') {
             this.el.textContent = txt.slice(0, --this.char);
-            if (this.char === 0) { this.modo = 'escrever'; this.index = (this.index + 1) % this.textos.length; setTimeout(() => this.loop(), 400); } 
-            else setTimeout(() => this.loop(), 25);
+            if (this.char === 0) {
+                this.mode  = 'write';
+                this.index = (this.index + 1) % this.texts.length;
+                setTimeout(() => this._tick(), 400);
+            } else {
+                setTimeout(() => this._tick(), this.deleteSpeed);
+            }
         }
     }
 }
 
 function initHeroTypewriter() {
     const el = document.getElementById('hero-texto-animado');
-    if (el) new TypeWriter(el, ['Transforme seu negócio com tecnologia', 'Automação inteligente', 'Desenvolvimento Web Profissional']);
+    if (el) {
+        new TypeWriter(el, [
+            'Transforme seu negócio com tecnologia',
+            'Automação inteligente para sua casa',
+            'Desenvolvimento Web Profissional',
+            'Infraestrutura de TI sob medida'
+        ]);
+    }
 }
 
+/* ============================================================
+   6. SCROLL REVEAL (IntersectionObserver)
+   ============================================================ */
 function initScrollReveal() {
     const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('revealed'); observer.unobserve(entry.target); } });
+        entries.forEach(({ isIntersecting, target }) => {
+            if (isIntersecting) {
+                target.classList.add('revealed');
+                observer.unobserve(target);
+            }
+        });
     }, { threshold: 0.08 });
+
     document.querySelectorAll('[data-reveal], .stagger-children').forEach(el => observer.observe(el));
 }
 
-// 5. CHATBOT INTELIGENTE
-class XerfanSmartBot {
+/* ============================================================
+   7. CHATBOT XTL
+   ============================================================ */
+class XerfanChatBot {
     constructor() {
         this.isOpen = false;
-        this.step = 0; 
-        this.lead = { detalhes: '', nome: '', local: '' };
-        document.querySelectorAll('#xtl-bot-window-root').forEach(el => el.remove());
-        this.init();
+        this.step   = 0;
+        this.lead   = { question: '', name: '', location: '' };
+
+        // Garante apenas uma instância
+        document.getElementById('xtl-bot-root')?.remove();
+        this._render();
+        this._bindEvents();
+        this._botSay('Olá! 👋 Em que posso ajudar você hoje?');
     }
 
-    init() {
-        this.renderChatWindow();
-        this.bindEvents();
-        setTimeout(() => this.appendBot('Olá! 👋 Como posso ajudar você hoje?'), 1000);
-    }
-
-    renderChatWindow() {
-        const div = document.createElement('div');
-        div.id = 'xtl-bot-window-root';
-        div.innerHTML = `
-            <style>
-                #xtl-bot-window { transform-origin: bottom right; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2000; }
-                .chat-bubble-user { background: linear-gradient(135deg, #25D366, #128C7E); color: white; margin-left: auto; border-radius: 1rem 1rem 0 1rem; padding: 0.6rem 1rem; max-width: 85%; font-size: 0.85rem; margin-bottom: 8px;}
-                .chat-bubble-bot { background-color: #1f2937; color: #e5e7eb; margin-right: auto; border-radius: 1rem 1rem 1rem 0; padding: 0.6rem 1rem; max-width: 85%; border: 1px solid #374151; font-size: 0.85rem; margin-bottom: 8px; }
-            </style>
-            <div id="xtl-bot-window" class="fixed bottom-[90px] right-6 bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl w-[320px] sm:w-[340px] overflow-hidden scale-0 opacity-0 pointer-events-none flex flex-col">
-                <div class="bg-gray-800 p-4 border-b border-gray-700 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-gray-950 rounded-full p-1 border border-gray-700"><img src="img/logo.png" class="w-full h-full object-contain"></div>
-                        <h4 class="text-white font-bold text-sm">Suporte XTL</h4>
+    /* — Render — */
+    _render() {
+        const root = document.createElement('div');
+        root.id = 'xtl-bot-root';
+        root.innerHTML = `
+        <style>
+            #xtl-win{transform-origin:bottom right;transition:all .3s cubic-bezier(.4,0,.2,1)}
+            .xb-user{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;margin-left:auto;border-radius:1rem 1rem 0 1rem;padding:.6rem 1rem;max-width:85%;font-size:.85rem;margin-bottom:8px;word-break:break-word}
+            .xb-bot{background:#1f2937;color:#e5e7eb;margin-right:auto;border-radius:1rem 1rem 1rem 0;padding:.6rem 1rem;max-width:85%;border:1px solid #374151;font-size:.85rem;margin-bottom:8px;word-break:break-word}
+        </style>
+        <div id="xtl-win" class="fixed bottom-[90px] right-6 bg-gray-900 border border-gray-700/80 rounded-2xl shadow-2xl w-[320px] sm:w-[350px] overflow-hidden scale-0 opacity-0 pointer-events-none flex flex-col z-[2000]">
+            <!-- Header -->
+            <div class="bg-gray-800 px-4 py-3 border-b border-gray-700 flex items-center justify-between gap-3 flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-gray-950 rounded-full p-1 border border-gray-700 flex-shrink-0">
+                        <img src="img/logo.png" class="w-full h-full object-contain" alt="XTL" onerror="this.parentElement.innerHTML='<span class=&quot;text-orange-500 font-black text-xs&quot;>XTL</span>'">
                     </div>
-                    <button id="xtl-bot-close" class="text-gray-400 hover:text-white p-1"><i class="fas fa-times"></i></button>
+                    <div>
+                        <h4 class="text-white font-bold text-sm leading-none">Suporte XTL</h4>
+                        <p class="text-green-400 text-[10px] mt-0.5 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-green-400 rounded-full inline-block"></span> Online agora</p>
+                    </div>
                 </div>
-                <div id="xtl-bot-body" class="p-4 bg-[#0b101a] h-[300px] overflow-y-auto flex flex-col relative"></div>
-                <div id="xtl-bot-transfer" class="hidden p-3 bg-gray-800 border-t border-gray-700">
-                    <button id="xtl-bot-wpp" class="w-full bg-green-600 text-white font-bold py-2 rounded-xl text-sm">Falar no WhatsApp Agora</button>
-                </div>
-                <div class="p-3 bg-gray-900 border-t border-gray-700 flex gap-2">
-                    <input type="text" id="xtl-bot-input" placeholder="Digite aqui..." class="flex-1 bg-gray-800 text-white text-sm border border-gray-700 rounded-xl px-3 py-2 outline-none">
-                    <button id="xtl-bot-send" class="w-10 h-10 bg-orange-500 text-white rounded-xl flex items-center justify-center"><i class="fas fa-paper-plane text-xs"></i></button>
-                </div>
-            </div>`;
-        document.body.appendChild(div);
+                <button id="xb-close" class="text-gray-400 hover:text-white hover:bg-gray-700 w-7 h-7 rounded-lg flex items-center justify-center transition-all" aria-label="Fechar chat">
+                    <i class="fas fa-times text-sm"></i>
+                </button>
+            </div>
+            <!-- Mensagens -->
+            <div id="xb-body" class="p-4 bg-[#0b101a] h-[280px] overflow-y-auto flex flex-col" role="log" aria-live="polite"></div>
+            <!-- Botão de transferência -->
+            <div id="xb-transfer" class="hidden px-3 pb-3 bg-[#0b101a]">
+                <button id="xb-wpp" class="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-lg">
+                    <i class="fab fa-whatsapp text-base"></i> Falar com Técnico no WhatsApp
+                </button>
+            </div>
+            <!-- Input -->
+            <div class="px-3 pb-3 pt-2 bg-gray-900 border-t border-gray-800 flex gap-2 flex-shrink-0">
+                <input type="text" id="xb-input" placeholder="Digite sua mensagem..." autocomplete="off"
+                    class="flex-1 bg-gray-800 text-white text-sm border border-gray-700 rounded-xl px-3 py-2.5 outline-none focus:border-orange-500 transition-colors placeholder-gray-500"
+                    aria-label="Mensagem para o chat">
+                <button id="xb-send" class="w-10 h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl flex items-center justify-center transition-all flex-shrink-0" aria-label="Enviar">
+                    <i class="fas fa-paper-plane text-xs"></i>
+                </button>
+            </div>
+        </div>`;
+        document.body.appendChild(root);
     }
 
-    bindEvents() {
-        const trigger = document.getElementById('xtl-chat-trigger');
-        if (trigger) trigger.addEventListener('click', () => this.toggle());
-        document.getElementById('xtl-bot-close').addEventListener('click', () => this.close());
-        document.getElementById('xtl-bot-send').addEventListener('click', () => this.handleInput());
-        document.getElementById('xtl-bot-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') this.handleInput(); });
-        document.getElementById('xtl-bot-wpp').addEventListener('click', () => this.sendToWhatsApp());
+    /* — Eventos — */
+    _bindEvents() {
+        document.getElementById('xtl-chat-trigger')?.addEventListener('click', () => this._toggle());
+        document.getElementById('xb-close').addEventListener('click', () => this._close());
+        document.getElementById('xb-send').addEventListener('click',  () => this._handleInput());
+        document.getElementById('xb-input').addEventListener('keypress', e => { if (e.key === 'Enter') this._handleInput(); });
+        document.getElementById('xb-wpp').addEventListener('click', () => this._sendToWhatsApp());
     }
 
-    toggle() { this.isOpen ? this.close() : this.open(); }
+    _toggle() { this.isOpen ? this._close() : this._open(); }
 
-    open() {
-        const win = document.getElementById('xtl-bot-window');
-        win.classList.add('scale-100', 'opacity-100'); win.classList.remove('scale-0', 'opacity-0', 'pointer-events-none');
+    _open() {
+        const win = document.getElementById('xtl-win');
+        win.classList.replace('scale-0', 'scale-100');
+        win.classList.replace('opacity-0', 'opacity-100');
+        win.classList.remove('pointer-events-none');
         document.getElementById('xtl-bot-icon').className = 'fas fa-times text-xl';
-        const tooltip = document.getElementById('xtl-bot-tooltip');
-        if (tooltip) tooltip.style.display = 'none';
+        document.getElementById('xtl-bot-tooltip')?.style && (document.getElementById('xtl-bot-tooltip').style.display = 'none');
         this.isOpen = true;
-        setTimeout(() => document.getElementById('xtl-bot-input').focus(), 100);
+        setTimeout(() => document.getElementById('xb-input').focus(), 150);
     }
 
-    close() {
-        const win = document.getElementById('xtl-bot-window');
-        win.classList.remove('scale-100', 'opacity-100'); win.classList.add('scale-0', 'opacity-0', 'pointer-events-none');
+    _close() {
+        const win = document.getElementById('xtl-win');
+        win.classList.replace('scale-100', 'scale-0');
+        win.classList.replace('opacity-100', 'opacity-0');
+        win.classList.add('pointer-events-none');
         document.getElementById('xtl-bot-icon').className = 'fab fa-whatsapp';
-        const tooltip = document.getElementById('xtl-bot-tooltip');
-        if (tooltip) tooltip.style.display = '';
+        const tip = document.getElementById('xtl-bot-tooltip');
+        if (tip) tip.style.display = '';
         this.isOpen = false;
     }
 
-    appendUser(text) {
-        const body = document.getElementById('xtl-bot-body');
-        body.innerHTML += `<div class="chat-bubble-user">${text}</div>`;
+    _appendUser(text) {
+        const body = document.getElementById('xb-body');
+        const div = document.createElement('div');
+        div.className = 'xb-user';
+        div.textContent = text;
+        body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
 
-    appendBot(text) {
-        const body = document.getElementById('xtl-bot-body');
+    _botSay(text, delay = 700) {
+        const body = document.getElementById('xb-body');
+        // Indicador de digitação
+        const typing = document.createElement('div');
+        typing.className = 'xb-bot typing-indicator';
+        typing.innerHTML = '<span></span><span></span><span></span>';
+        body.appendChild(typing);
+        body.scrollTop = body.scrollHeight;
+
         setTimeout(() => {
-            body.innerHTML += `<div class="chat-bubble-bot">${text}</div>`;
+            typing.remove();
+            const div = document.createElement('div');
+            div.className = 'xb-bot';
+            div.innerHTML = text;
+            body.appendChild(div);
             body.scrollTop = body.scrollHeight;
-        }, 600);
+        }, delay);
     }
 
-    handleInput() {
-        const input = document.getElementById('xtl-bot-input');
-        const msg = input.value.trim();
-        if(!msg) return;
-        this.appendUser(msg);
-        input.value = '';
-        document.getElementById('xtl-bot-transfer').classList.remove('hidden');
+    _handleInput() {
+        const input = document.getElementById('xb-input');
+        const msg   = input.value.trim();
+        if (!msg) return;
 
-        if (this.step === 0) {
-            this.lead.detalhes = msg;
-            this.appendBot('Entendido! Para te ajudar melhor, qual é o teu nome?');
-            this.step = 1;
-        } else if (this.step === 1) {
-            this.lead.nome = msg;
-            this.appendBot(`Prazer, ${msg}! Em qual bairro te encontras?`);
-            this.step = 2;
-        } else if (this.step === 2) {
-            this.lead.local = msg;
-            this.appendBot('Tudo pronto! Clica no botão acima para falar com o técnico.');
-            this.step = 3;
+        this._appendUser(msg);
+        input.value = '';
+
+        switch (this.step) {
+            case 0:
+                this.lead.question = msg;
+                this._botSay('Entendido! Para te ajudar melhor, qual é o seu nome?');
+                this.step = 1;
+                break;
+            case 1:
+                this.lead.name = msg;
+                this._botSay(`Prazer, <strong>${msg}</strong>! Em qual bairro ou cidade você está?`);
+                this.step = 2;
+                break;
+            case 2:
+                this.lead.location = msg;
+                this._botSay('Tudo certo! Agora clique no botão abaixo para falar diretamente com o técnico. 👇');
+                this.step = 3;
+                document.getElementById('xb-transfer').classList.remove('hidden');
+                break;
+            default:
+                this._botSay('Clique no botão acima para falar com o técnico pelo WhatsApp! 😊');
         }
     }
 
-    sendToWhatsApp() {
-        let text = `*SITE XERFAN TECH*%0A👤 *Nome:* ${this.lead.nome}%0A📍 *Local:* ${this.lead.local}%0A📝 *Dúvida:* ${this.lead.detalhes}`;
+    _sendToWhatsApp() {
+        const text = encodeURIComponent(
+            `*Xerfan Tech Lab — Site*\n` +
+            `👤 *Nome:* ${this.lead.name}\n` +
+            `📍 *Local:* ${this.lead.location}\n` +
+            `📝 *Dúvida:* ${this.lead.question}`
+        );
         window.open(`https://wa.me/5521984197719?text=${text}`, '_blank');
-        this.close();
+        this._close();
     }
 }
 
-// BOOT
+/* ============================================================
+   8. BOOT — DOMContentLoaded
+   ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
     loadComponent('header', 'components/header.html');
     loadComponent('footer', 'components/footer.html');
