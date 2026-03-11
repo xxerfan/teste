@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços Técnicos - Xerfan Tech Lab</title>
+    
+    <meta name="description" content="Conheça os nossos serviços: manutenção preventiva, automação inteligente, criação de sites e projetos de redes.">
+    <meta name="keywords" content="serviços de TI, conserto pc, automação inteligente, criação de sites, projeto de redes, Niterói">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Serviços Técnicos - Xerfan Tech Lab">
+    <meta property="og:description" content="Projetos, manutenções e infraestrutura executados com o mais alto rigor técnico e atendimento dedicado.">
+    <meta property="og:image" content="img/logo.png">
+    <meta property="og:site_name" content="Xerfan Tech Lab">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/enhancements.css">
+    <link rel="icon" type="image/x-icon" href="img/logo.png">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .modal-enter { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .servico-card-pro { transition: all 0.3s ease; }
+        .servico-card-pro:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body class="bg-gray-950 transition-colors duration-300">
+
+    <div class="hidden from-blue-600 to-blue-800 from-orange-500 to-orange-700 from-purple-600 to-purple-800 from-teal-600 to-teal-800 from-blue-500 to-blue-700 from-emerald-500 to-emerald-700 from-rose-500 to-rose-700 from-indigo-500 to-indigo-700 bg-white/20"></div>
+
+    <div id="header"></div>
+
+    <section class="relative py-20 lg:py-24 bg-gradient-to-br from-gray-950 via-blue-950/20 to-gray-950 border-b border-gray-800 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-[80px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-[80px]"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10 text-center" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-orange-400 text-xs sm:text-sm font-bold tracking-wide uppercase mb-6 shadow-lg backdrop-blur-sm">
+                <i class="fas fa-tools"></i> Especialistas em Tecnologia
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-5">
+                Soluções & <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Serviços</span>
+            </h1>
+            <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Projetos, manutenções e infraestrutura executados com o mais alto rigor técnico e atendimento dedicado.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-6 bg-gray-900 border-b border-gray-800 sticky top-[80px] lg:top-[96px] z-30 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div class="filter-tabs w-full md:w-auto overflow-x-auto pb-2 md:pb-0" id="servicos-filters">
+                    <button class="filter-tab active whitespace-nowrap" data-cat="all">Carregando categorias...</button>
+                </div>
+                <div class="relative w-full md:max-w-xs">
+                    <input type="text" id="search-servicos" placeholder="Buscar serviço..." class="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-orange-500 transition-all text-sm">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-950 min-h-[50vh]">
+        <div class="container mx-auto px-4">
+            
+            <div id="loading-spinner" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-10">
+                <div class="bg-gray-800/50 rounded-3xl h-[280px] animate-pulse border border-gray-700/30"></div>
+                <div class="bg-gray-800/50 rounded-3xl h-[280px] animate-pulse border border-gray-700/30 hidden md:block"></div>
+                <div class="bg-gray-800/50 rounded-3xl h-[280px] animate-pulse border border-gray-700/30 hidden lg:block"></div>
+                <div class="bg-gray-800/50 rounded-3xl h-[280px] animate-pulse border border-gray-700/30 hidden xl:block"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden" id="servicos-grid"></div>
+            
+            <div id="no-results" class="hidden text-center py-16">
+                <div class="w-20 h-20 bg-gray-900 border border-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg"><i class="fas fa-clipboard-list text-gray-600 text-3xl"></i></div>
+                <h3 class="text-xl font-bold text-white mb-2">Nenhum serviço encontrado</h3>
+            </div>
+            
+        </div>
+    </section>
+    
+    <div id="footer"></div>
+
+    <div id="modal-detalhes" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] hidden items-center justify-center p-4 transition-all">
+        <div class="bg-gray-900 border border-gray-700 w-full max-w-4xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] modal-enter overflow-hidden flex flex-col md:flex-row max-h-[95vh] md:max-h-[80vh]">
+            
+            <div id="detalhe-img-container" class="md:w-1/2 bg-gray-900 relative flex items-center justify-center min-h-[250px] md:min-h-full overflow-hidden border-b md:border-b-0 md:border-r border-gray-800">
+                <div id="detalhe-imagem-blur" class="absolute inset-0 bg-cover bg-center opacity-30 blur-2xl transform scale-110 transition-all duration-700"></div>
+                <button onclick="fecharDetalhes()" class="absolute top-4 left-4 bg-black/60 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center md:hidden z-20 transition-colors"><i class="fas fa-arrow-left"></i></button>
+                <div id="detalhe-imagem" class="absolute inset-8 bg-contain bg-no-repeat bg-center transition-transform duration-700 hover:scale-105 z-10"></div>
+                <div id="detalhe-icone" class="hidden z-10"><i class="fas fa-tools text-6xl text-gray-600"></i></div>
+            </div>
+            
+            <div class="md:w-1/2 p-6 md:p-10 overflow-y-auto relative flex flex-col bg-gray-900">
+                <button onclick="fecharDetalhes()" class="absolute top-6 right-6 text-gray-400 hover:text-orange-500 transition-colors hidden md:block z-10"><i class="fas fa-times text-2xl"></i></button>
+                
+                <div class="mt-2 md:mt-0">
+                    <span id="detalhe-categoria" class="px-3 py-1 bg-gray-800 text-gray-300 border border-gray-700 rounded-md text-[10px] font-bold uppercase tracking-wider mb-4 inline-block">Categoria</span>
+                    <h2 id="detalhe-nome" class="text-2xl md:text-3xl font-black text-white mb-4 leading-tight">Nome do Serviço</h2>
+                    
+                    <div class="mb-6 border-b border-gray-800 pb-6">
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1" id="detalhe-preco-label">Investimento</p>
+                        <div id="detalhe-preco" class="text-3xl font-black text-orange-500">Sob Orçamento</div>
+                    </div>
+
+                    <div class="mb-8 flex-1">
+                        <p class="text-sm text-white font-bold mb-3 flex items-center gap-2"><i class="fas fa-info-circle text-orange-500"></i> Detalhes do Serviço</p>
+                        <p id="detalhe-descricao" class="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap">Descrição não informada.</p>
+                    </div>
+
+                    <div class="flex flex-col gap-3 mt-auto">
+                        <a id="detalhe-wpp-btn" href="#" target="_blank" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3">
+                            <i class="fab fa-whatsapp text-xl"></i> Solicitar Orçamento
+                        </a>
+                        <a id="detalhe-link-extra" href="#" target="_blank" class="hidden w-full bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white font-bold text-sm py-3.5 rounded-xl transition-all items-center justify-center gap-2">
+                            Saiba Mais em Nossa Página Especial <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+
+    <script type="module">
+        // Importação centralizada do Firebase
+        import { db } from "./js/firebase-config.js";
+        import { collection, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if(typeof loadComponent === 'function') {
+                loadComponent('header', 'components/header.html');
+                loadComponent('footer', 'components/footer.html');
+            }
+            AOS.init({ duration: 800, once: true });
+
+            const grid = document.getElementById('servicos-grid');
+            const spinner = document.getElementById('loading-spinner');
+            const noResults = document.getElementById('no-results');
+            const filterTabsContainer = document.getElementById('servicos-filters');
+            const searchInput = document.getElementById('search-servicos');
+
+            // Busca apenas serviços marcados como "ativo"
+            const q = query(collection(db, "servicos"), where("status", "==", "ativo"));
+
+            onSnapshot(q, (snapshot) => {
+                spinner.classList.add('hidden');
+                grid.innerHTML = '';
+                const categoriasUnicas = new Set();
+
+                if (snapshot.empty) {
+                    noResults.classList.remove('hidden');
+                    grid.classList.add('hidden');
+                    filterTabsContainer.innerHTML = '<button class="filter-tab active whitespace-nowrap" data-cat="all">Sem Serviços</button>';
+                    return;
+                }
+
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
+
+                // Percorre todos os serviços vindos do banco
+                snapshot.forEach((doc) => {
+                    const s = doc.data();
+                    if(s.categoria) categoriasUnicas.add(s.categoria);
+                    
+                    // 1. Definição Automática de Cores Baseada na Categoria
+                    let corGradiente = 'from-gray-600 to-gray-800'; 
+                    let icone = 'fa-tools'; 
+                    const catL = s.categoria.toLowerCase();
+                    if(catL.includes('computador') || catL.includes('manuten')) { corGradiente = 'from-blue-600 to-blue-800'; icone = 'fa-laptop'; } 
+                    else if(catL.includes('smart') || catL.includes('celular') || catL.includes('tablet')) { corGradiente = 'from-orange-500 to-orange-700'; icone = 'fa-mobile-alt'; } 
+                    else if(catL.includes('automação') || catL.includes('smart') || catL.includes('projeto')) { corGradiente = 'from-purple-600 to-purple-800'; icone = 'fa-robot'; } 
+                    else if(catL.includes('rede') || catL.includes('energia')) { corGradiente = 'from-teal-600 to-teal-800'; icone = 'fa-bolt'; } 
+                    else { corGradiente = 'from-blue-500 to-blue-700'; }
+
+                    // 2. Extração da Descrição para Tópicos
+                    let linhas = s.descricao ? s.descricao.split('\n').filter(l => l.trim() !== '') : [];
+                    let textoTopo = linhas.length > 0 ? linhas[0] : "Serviço especializado Xerfan Tech Lab.";
+                    let bulletsHtml = '<div class="h-4"></div>'; 
+                    
+                    if (linhas.length > 1) {
+                        bulletsHtml = `<ul class="space-y-3 mb-6 flex-1 mt-6">`;
+                        for (let i = 1; i < Math.min(linhas.length, 6); i++) {
+                            bulletsHtml += `<li class="flex items-start gap-2 text-sm text-gray-300"><i class="fas fa-check text-orange-500 mt-1 shrink-0"></i> <span class="leading-snug">${linhas[i]}</span></li>`;
+                        }
+                        bulletsHtml += `</ul>`;
+                    } else {
+                        bulletsHtml = `<div class="mb-6 flex-1 mt-6 text-sm text-gray-400 italic">Clique para saber mais...</div>`;
+                    }
+
+                    // 3. Preparação do Preço
+                    let precoHtml = s.sob_orcamento 
+                        ? `<div class="text-xl font-black text-white">Sob Consulta</div>` 
+                        : `<div class="text-2xl font-black text-orange-500">R$ ${parseFloat(s.preco_base || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>`;
+
+                    // 4. Criação e Injeção do Cartão HTML
+                    const servicoJsonStr = encodeURIComponent(JSON.stringify(s));
+                    let btnWppTexto = s.sob_orcamento ? 'Consultar' : 'Agendar';
+                    let btnIcon = s.sob_orcamento ? 'fa-comment-dots' : 'fa-calendar-alt';
+
+                    let botoesRodape = '';
+                    if (s.link_pagina && s.link_pagina.trim() !== "") {
+                        botoesRodape = `
+                        <div class="flex items-center gap-2">
+                            <a href="${s.link_pagina.trim()}" target="_blank" onclick="event.stopPropagation()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center transition-all shadow-lg" title="Saiba mais em nova guia">
+                                Saiba Mais <i class="fas fa-external-link-alt ml-1.5"></i>
+                            </a>
+                            <button onclick="event.stopPropagation(); abrirDetalhesServico('${servicoJsonStr}')" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm flex items-center gap-2 shadow-lg transition-all whitespace-nowrap">
+                                <i class="far ${btnIcon}"></i> ${btnWppTexto}
+                            </button>
+                        </div>`;
+                    } else {
+                        botoesRodape = `
+                        <button onclick="event.stopPropagation(); abrirDetalhesServico('${servicoJsonStr}')" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 text-white font-bold py-2.5 px-5 rounded-xl text-sm flex items-center gap-2 shadow-lg transition-all">
+                            <i class="far ${btnIcon}"></i> ${btnWppTexto}
+                        </button>`;
+                    }
+
+                    const cardHTML = `
+                    <div class="servico-item servico-card-pro bg-gray-800 rounded-3xl overflow-hidden flex flex-col h-full border border-gray-700/50 cursor-pointer" data-cat="${s.categoria}" data-name="${s.nome.toLowerCase()}" onclick="abrirDetalhesServico('${servicoJsonStr}')">
+                        <div class="bg-gradient-to-br ${corGradiente} p-6 flex flex-col gap-4 min-h-[160px]">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-white text-2xl shrink-0 shadow-inner"><i class="fas ${icone}"></i></div>
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-white/70">${s.categoria}</span>
+                                    <h3 class="text-xl font-bold text-white leading-tight line-clamp-2" title="${s.nome}">${s.nome}</h3>
+                                </div>
+                            </div>
+                            <p class="text-sm text-white/90 leading-snug line-clamp-3">${textoTopo}</p>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col bg-gray-800">
+                            ${bulletsHtml}
+                            <div class="flex items-end justify-between mt-auto pt-4 border-t border-gray-700/50">
+                                <div><span class="text-xs text-gray-400 block mb-1">${s.sob_orcamento ? 'Valor:' : 'A partir de'}</span>${precoHtml}</div>
+                                ${botoesRodape}
+                            </div>
+                        </div>
+                    </div>`;
+                    grid.insertAdjacentHTML('beforeend', cardHTML);
+                });
+
+                // Geração das Abas de Filtro
+                filterTabsContainer.innerHTML = `<button class="filter-tab active whitespace-nowrap" data-cat="all">Todos os Serviços</button>`;
+                categoriasUnicas.forEach(cat => { filterTabsContainer.innerHTML += `<button class="filter-tab whitespace-nowrap" data-cat="${cat}">⚙️ ${cat}</button>`; });
+                
+                // Evento de clique nas abas
+                document.querySelectorAll('.filter-tab').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                        e.target.classList.add('active');
+                        aplicarFiltros();
+                    });
+                });
+            });
+
+            // Função que aplica as abas e a barra de pesquisa
+            function aplicarFiltros() {
+                const catAtiva = document.querySelector('.filter-tab.active')?.dataset.cat || 'all';
+                const termoBusca = searchInput?.value.toLowerCase() || '';
+                const cartoes = document.querySelectorAll('.servico-item');
+                let visiveis = 0;
+
+                cartoes.forEach(cartao => {
+                    const matchCat = (catAtiva === 'all' || cartao.dataset.cat === catAtiva);
+                    const matchTermo = (termoBusca === '' || cartao.dataset.name.includes(termoBusca));
+                    if (matchCat && matchTermo) { cartao.style.display = 'flex'; visiveis++; } 
+                    else { cartao.style.display = 'none'; }
+                });
+
+                if (visiveis === 0 && cartoes.length > 0) noResults.classList.remove('hidden');
+                else if (cartoes.length > 0) noResults.classList.add('hidden');
+            }
+            if (searchInput) searchInput.addEventListener('input', aplicarFiltros);
+        });
+
+        // ==========================================
+        // LÓGICA DO MODAL (ABRIR E FECHAR)
+        // ==========================================
+        window.abrirDetalhesServico = function(jsonStr) {
+            const s = JSON.parse(decodeURIComponent(jsonStr));
+            const modal = document.getElementById('modal-detalhes');
+            
+            document.getElementById('detalhe-categoria').innerText = s.categoria;
+            document.getElementById('detalhe-nome').innerText = s.nome;
+            document.getElementById('detalhe-descricao').innerText = s.descricao && s.descricao.trim() !== "" ? s.descricao : "Para mais detalhes, entre em contato.";
+
+            const elPreco = document.getElementById('detalhe-preco');
+            if (s.sob_orcamento) { elPreco.innerHTML = `Sob Orçamento <span class="text-sm font-medium text-gray-400 block mt-1">Valores variam.</span>`; } 
+            else { elPreco.innerText = `A partir de R$ ${parseFloat(s.preco_base || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`; }
+
+            // Configura a Imagem ou o Ícone
+            const elImagem = document.getElementById('detalhe-imagem');
+            const elImagemBlur = document.getElementById('detalhe-imagem-blur');
+            const elIcone = document.getElementById('detalhe-icone');
+            if (s.imagem && s.imagem.trim() !== "") {
+                elImagem.style.backgroundImage = `url('${s.imagem}')`;
+                if(elImagemBlur) elImagemBlur.style.backgroundImage = `url('${s.imagem}')`;
+                elImagem.classList.remove('hidden'); if(elImagemBlur) elImagemBlur.classList.remove('hidden');
+                elIcone.classList.add('hidden');
+            } else {
+                elImagem.classList.add('hidden'); if(elImagemBlur) elImagemBlur.classList.add('hidden');
+                elIcone.classList.remove('hidden');
+                elIcone.innerHTML = `<i class="fas fa-tools text-8xl text-gray-600"></i>`;
+            }
+
+            // Configura o Botão do WPP
+            const elBtnWpp = document.getElementById('detalhe-wpp-btn');
+            elBtnWpp.href = `https://wa.me/5521984197719?text=${encodeURIComponent(`Olá! Gostaria de agendar ou solicitar um orçamento para o serviço: ${s.nome}`)}`;
+
+            // Exibe o Link Extra se existir
+            const elLinkExtra = document.getElementById('detalhe-link-extra');
+            if (s.link_pagina && s.link_pagina.trim() !== "") {
+                elLinkExtra.href = s.link_pagina.trim();
+                elLinkExtra.classList.remove('hidden'); elLinkExtra.classList.add('flex');
+            } else {
+                elLinkExtra.classList.add('hidden'); elLinkExtra.classList.remove('flex');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Impede o scroll da página enquanto o modal está aberto
+        };
+
+        window.fecharDetalhes = function() {
+            const modal = document.getElementById('modal-detalhes');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; // Devolve o scroll
+        };
+
+        // Fecha ao clicar fora do modal
+        document.getElementById('modal-detalhes').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal-detalhes')) fecharDetalhes();
+        });
+    </script>
+</body>
+</html>

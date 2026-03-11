@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Visita - Xerfan Tech Lab</title>
+    
+    <meta name="description" content="Agende uma visita técnica ou atendimento especializado com a Xerfan Tech Lab. Rapidez e garantia em Niterói e região.">
+    <meta name="keywords" content="agendamento, visita técnica, conserto PC, automação Niterói, orçamento TI">
+    <meta name="author" content="Xerfan Tech Lab">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Agendar Atendimento - Xerfan Tech Lab">
+    <meta property="og:description" content="Precisa de assistência técnica ou um orçamento? Escolha o serviço, a data e o local. Nós vamos até si!">
+    <meta property="og:image" content="img/logo.png">
+    <meta property="og:site_name" content="Xerfan Tech Lab">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/enhancements.css">
+    <link rel="icon" type="image/x-icon" href="img/logo.png">
+</head>
+<body class="bg-gray-950 text-gray-100 transition-colors duration-300 overflow-x-hidden">
+
+    <div id="header"></div>
+
+    <section class="relative py-20 lg:py-24 bg-gradient-to-br from-gray-950 via-blue-950/20 to-gray-950 border-b border-gray-800 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-[80px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-[80px]"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10 text-center" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-orange-400 text-xs sm:text-sm font-bold tracking-wide uppercase mb-6 shadow-lg backdrop-blur-sm">
+                <i class="fas fa-calendar-check"></i> Reserva Online
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-5">
+                Agendar <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Atendimento</span>
+            </h1>
+            
+            <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Escolha o serviço, a data e o local de preferência. Confirmaremos todos os detalhes diretamente pelo seu WhatsApp.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-950">
+        <div class="container mx-auto px-4 max-w-5xl">
+            
+            <form id="form-agendamento">
+                <input type="hidden" name="access_key" value="7a7dcbd0-f1c5-402a-b886-6c71d0a1ee18"> 
+                <input type="hidden" name="subject" value="NOVO AGENDAMENTO - Xerfan Tech Lab"> 
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;"> 
+                
+                <div class="grid lg:grid-cols-3 gap-10">
+                    <div class="lg:col-span-2 space-y-8">
+                        <div class="bg-gray-900 border border-gray-800 p-8 rounded-3xl shadow-xl" data-aos="fade-right">
+                            <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                                <span class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-sm shadow-lg shadow-orange-500/20">1</span>
+                                Quem é você?
+                            </h3>
+                            <div class="grid md:grid-cols-2 gap-5">
+                                <div class="form-group">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Nome Completo</label>
+                                    <input type="text" name="nome" required class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all">
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">WhatsApp</label>
+                                    <input type="tel" name="telefone" required placeholder="(21) 98419-7719" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-900 border border-gray-800 p-8 rounded-3xl shadow-xl" data-aos="fade-right" data-aos-delay="100">
+                            <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                                <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm shadow-lg shadow-blue-500/20">2</span>
+                                Onde será o atendimento?
+                            </h3>
+                            <div class="grid md:grid-cols-3 gap-5">
+                                <div class="md:col-span-2">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Endereço / Rua</label>
+                                    <input type="text" name="local_rua" required class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 outline-none focus:border-blue-500 transition-all">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Nº</label>
+                                    <input type="text" name="local_numero" required class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 outline-none focus:border-blue-500 transition-all">
+                                </div>
+                                <div class="md:col-span-3">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Bairro / Referência</label>
+                                    <input type="text" name="local_bairro" required placeholder="Ex: Icaraí - Próximo ao campo de São Bento" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 outline-none focus:border-blue-500 transition-all">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-8">
+                        <div class="bg-gray-900 border border-gray-800 p-8 rounded-3xl shadow-xl h-full" data-aos="fade-left">
+                            <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                                <span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-sm shadow-lg shadow-green-500/20">3</span>
+                                Serviço e Data
+                            </h3>
+                            <div class="space-y-4">
+                                <label class="text-xs font-bold text-gray-500 uppercase ml-1">O que você precisa?</label>
+                                <div class="grid gap-3">
+                                    <label class="relative flex items-center p-3 border border-gray-700 rounded-2xl cursor-pointer hover:bg-gray-800 transition-all group has-[:checked]:border-orange-500 has-[:checked]:bg-orange-500/5">
+                                        <input type="radio" name="assunto_selecionado" value="Manutenção PC/Celular" class="hidden" checked>
+                                        <div class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fas fa-tools text-orange-500"></i></div>
+                                        <span class="ml-3 font-semibold text-sm text-gray-300">Manutenção PC/Celular</span>
+                                    </label>
+                                    <label class="relative flex items-center p-3 border border-gray-700 rounded-2xl cursor-pointer hover:bg-gray-800 transition-all group has-[:checked]:border-blue-500 has-[:checked]:bg-blue-500/5">
+                                        <input type="radio" name="assunto_selecionado" value="Automação Residencial" class="hidden">
+                                        <div class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fas fa-robot text-blue-500"></i></div>
+                                        <span class="ml-3 font-semibold text-sm text-gray-300">Automação</span>
+                                    </label>
+                                    <label class="relative flex items-center p-3 border border-gray-700 rounded-2xl cursor-pointer hover:bg-gray-800 transition-all group has-[:checked]:border-purple-500 has-[:checked]:bg-purple-500/5">
+                                        <input type="radio" name="assunto_selecionado" value="Infraestrutura e Redes" class="hidden">
+                                        <div class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fas fa-network-wired text-purple-500"></i></div>
+                                        <span class="ml-3 font-semibold text-sm text-gray-300">Redes/Infra</span>
+                                    </label>
+                                </div>
+                                <div class="pt-4">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Data Desejada</label>
+                                    <input type="date" name="agendamento_data" required id="date-input" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 mt-2 outline-none focus:border-green-500 text-white [color-scheme:dark]">
+                                </div>
+                                <div class="pt-2">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Período</label>
+                                    <select name="agendamento_periodo" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 mt-2 outline-none focus:border-green-500 text-white appearance-none">
+                                        <option value="Manhã (09h às 12h)">Manhã (09h às 12h)</option>
+                                        <option value="Tarde (13h às 18h)">Tarde (13h às 18h)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center" data-aos="zoom-in">
+                    <button type="submit" id="btn-enviar" class="inline-flex items-center justify-center gap-3 px-12 py-5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xl rounded-2xl shadow-2xl shadow-orange-500/20 transform hover:-translate-y-1 transition-all w-full md:w-auto">
+                        <i class="fas fa-paper-plane"></i> CONFIRMAR AGENDAMENTO
+                    </button>
+                    <p class="text-gray-500 text-xs mt-5">Após clicar, abriremos o seu WhatsApp para validação final do horário.</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <div id="footer"></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script type="module">
+        import { db } from "./js/firebase-config.js";
+        // Importação com setDoc para atualizar sem precisar ler
+        import { collection, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({ duration: 800, once: true });
+            if(typeof loadComponent === 'function') {
+                loadComponent('header', 'components/header.html');
+                loadComponent('footer', 'components/footer.html');
+            }
+            
+            const dateInput = document.getElementById('date-input');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.setAttribute('min', today);
+            }
+
+            const formAgendamento = document.getElementById('form-agendamento');
+            if(formAgendamento) {
+                formAgendamento.addEventListener('submit', async function(e) {
+                    e.preventDefault(); 
+                    
+                    const btn = document.getElementById('btn-enviar');
+                    const textoOriginal = btn.innerHTML;
+                    
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSANDO...';
+                    btn.disabled = true;
+
+                    try {
+                        const formData = new FormData(formAgendamento);
+                        const dados = Object.fromEntries(formData.entries());
+
+                        const enderecoCompleto = `${dados.local_rua}, ${dados.local_numero} - ${dados.local_bairro}`;
+                        const mensagemAgendamento = `Data: ${dados.agendamento_data} (${dados.agendamento_periodo})\nEndereço: ${enderecoCompleto}`;
+
+                        // 1. Gravação Firebase (Mensagens / Alertas para o Admin)
+                        await addDoc(collection(db, "mensagens"), {
+                            nome: dados.nome,
+                            email: "Lead de Agendamento",
+                            telefone: dados.telefone,
+                            assunto: `AGENDAMENTO: ${dados.assunto_selecionado}`,
+                            mensagem: mensagemAgendamento,
+                            data_envio: new Date().toISOString(),
+                            status: 'nova',
+                            origem: 'Agendamento Online'
+                        });
+
+                        // ==========================================
+                        // 2. CAPTAÇÃO AUTOMÁTICA DE CLIENTES (CRM)
+                        // Lógica de Upsert: Atualiza se existir, cria se não existir. Seguro e sem erro de leitura!
+                        // ==========================================
+                        const telefoneLimpo = dados.telefone.replace(/\D/g, ''); // Extrai apenas números
+                        if (telefoneLimpo) {
+                            const clienteRef = doc(db, "clientes", telefoneLimpo); 
+                            
+                            // O { merge: true } é o que faz a mágica acontecer!
+                            await setDoc(clienteRef, {
+                                nome: dados.nome,
+                                telefone: dados.telefone,
+                                endereco: enderecoCompleto,
+                                ultimo_servico: `Agendamento: ${dados.assunto_selecionado}`,
+                                data_atualizacao: new Date().toISOString()
+                            }, { merge: true });
+                        }
+
+                        // 3. Disparo Silencioso de E-mail
+                        fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(dados)
+                        });
+
+                        // 4. Feedback e WhatsApp
+                        if(typeof mostrarNotificacao === 'function') {
+                            mostrarNotificacao('Agendamento registado! Abrindo o WhatsApp...');
+                        }
+
+                        const textoWpp = `Olá Rodrigo! Acabei de solicitar um agendamento pelo site.\n\n` +
+                                         `*Nome:* ${dados.nome}\n` +
+                                         `*Serviço:* ${dados.assunto_selecionado}\n` +
+                                         `*Data:* ${dados.agendamento_data}\n` +
+                                         `*Período:* ${dados.agendamento_periodo}\n` +
+                                         `*Local:* ${enderecoCompleto}`;
+                        
+                        const urlWpp = `https://wa.me/5521984197719?text=${encodeURIComponent(textoWpp)}`;
+
+                        setTimeout(() => {
+                            window.open(urlWpp, '_blank');
+                            formAgendamento.reset();
+                            btn.innerHTML = textoOriginal;
+                            btn.disabled = false;
+                        }, 1500);
+
+                    } catch (error) {
+                        console.error("Erro no sistema:", error);
+                        if(typeof mostrarNotificacao === 'function') {
+                            mostrarNotificacao('Erro na conexão. Chame-nos diretamente no WhatsApp.', 'error');
+                        } else {
+                            alert('Erro ao processar. Por favor, tente pelo WhatsApp.');
+                        }
+                        btn.innerHTML = textoOriginal;
+                        btn.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

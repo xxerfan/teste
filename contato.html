@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Xerfan Tech Lab</title>
+    
+    <meta name="description" content="Entre em contato com a Xerfan Tech Lab. Suporte técnico, orçamentos e dúvidas. Atendimento rápido em Niterói e região.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fale Conosco - Xerfan Tech Lab">
+    <meta property="og:description" content="Estamos prontos para resolver o seu problema técnico. Fale com a nossa equipa!">
+    <meta property="og:image" content="img/logo.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/enhancements.css">
+    <link rel="icon" type="image/x-icon" href="img/logo.png">
+</head>
+<body class="bg-gray-950 text-gray-100 transition-colors duration-300 overflow-x-hidden">
+
+    <div id="header"></div>
+
+    <section class="relative py-20 lg:py-24 bg-gradient-to-br from-gray-950 via-blue-950/20 to-gray-950 border-b border-gray-800 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-[80px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-[80px]"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10 text-center" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-orange-400 text-xs sm:text-sm font-bold tracking-wide uppercase mb-6 shadow-lg backdrop-blur-sm">
+                <i class="fas fa-headset"></i> Suporte e Orçamentos
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-5">
+                Fale <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Conosco</span>
+            </h1>
+            <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Estamos prontos para resolver o seu problema técnico ou iniciar o planeamento do seu próximo grande projeto.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-950">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="grid lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+                
+                <div class="lg:col-span-2 space-y-6" data-aos="fade-right">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-black text-white mb-3">Como ajudar?</h2>
+                        <p class="text-gray-400 text-sm leading-relaxed">Utilize os nossos canais diretos para uma resposta mais rápida ou preencha o formulário.</p>
+                    </div>
+
+                    <a href="https://wa.me/5521984197719" target="_blank" class="block bg-gray-900 border border-gray-800 p-5 rounded-2xl hover:border-green-500/50 hover:bg-gray-800 transition-all group transform hover:-translate-y-1 shadow-lg">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-green-500 transition-all">
+                                <i class="fab fa-whatsapp text-2xl text-green-500 group-hover:text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">WhatsApp Rápido</p>
+                                <p class="text-lg font-bold text-white group-hover:text-green-400 transition-colors">(21) 98419-7719</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="mailto:contato@xerfantechlab.com.br" class="block bg-gray-900 border border-gray-800 p-5 rounded-2xl hover:border-orange-500/50 hover:bg-gray-800 transition-all group transform hover:-translate-y-1 shadow-lg">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-all">
+                                <i class="fas fa-envelope text-xl text-orange-500 group-hover:text-white"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">E-mail</p>
+                                <p class="text-base sm:text-lg font-bold text-white group-hover:text-orange-400 truncate">contato@xerfantechlab.com.br</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="lg:col-span-3" data-aos="fade-left">
+                    <div class="bg-gray-900 border border-gray-800 rounded-3xl p-8 lg:p-10 shadow-2xl relative overflow-hidden">
+                        <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                            <i class="fas fa-paper-plane text-orange-500"></i> Enviar Mensagem
+                        </h3>
+                        
+                        <form id="form-lead" class="space-y-6 relative z-10">
+                            <input type="hidden" name="access_key" value="7a7dcbd0-f1c5-402a-b886-6c71d0a1ee18">
+                            <div class="grid md:grid-cols-2 gap-5">
+                                <div class="form-group">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Seu Nome</label>
+                                    <input type="text" name="nome" required class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 text-white outline-none focus:border-orange-500 transition-all">
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Seu E-mail</label>
+                                    <input type="email" name="email" required class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 text-white outline-none focus:border-orange-500 transition-all">
+                                </div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-5">
+                                <div class="form-group">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">WhatsApp</label>
+                                    <input type="tel" name="telefone" required placeholder="(21) 98419-7719" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 text-white outline-none focus:border-orange-500 transition-all">
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-xs font-bold text-gray-500 uppercase ml-1">Assunto</label>
+                                    <select name="assunto_selecionado" required class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 text-white outline-none focus:border-orange-500 transition-all appearance-none">
+                                        <option value="" disabled selected>Escolha...</option>
+                                        <option value="Orçamento">Solicitar Orçamento</option>
+                                        <option value="Suporte Técnico">Suporte Técnico</option>
+                                        <option value="Dúvida">Dúvida Geral</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-xs font-bold text-gray-500 uppercase ml-1">Mensagem</label>
+                                <textarea name="mensagem" rows="4" required placeholder="Como podemos ajudar?" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3.5 mt-2 text-white outline-none focus:border-orange-500 transition-all resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" id="btn-submit" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 text-white font-black text-lg py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                                ENVIAR MENSAGEM <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer"></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script type="module">
+        import { db } from "./js/firebase-config.js";
+        // Importação com setDoc para atualizar sem precisar ler
+        import { collection, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 800, once: true });
+            if(typeof loadComponent === 'function') {
+                loadComponent('header', 'components/header.html');
+                loadComponent('footer', 'components/footer.html');
+            }
+            
+            const formLead = document.getElementById('form-lead');
+            if(formLead) {
+                formLead.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const btn = document.getElementById('btn-submit');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVIANDO...';
+                    btn.disabled = true;
+
+                    try {
+                        const formData = new FormData(formLead);
+                        const dados = Object.fromEntries(formData.entries());
+
+                        // 1. Gravação Caixa de Mensagens (Notificações do Admin)
+                        await addDoc(collection(db, "mensagens"), {
+                            nome: dados.nome,
+                            email: dados.email,
+                            telefone: dados.telefone,
+                            assunto: dados.assunto_selecionado,
+                            mensagem: dados.mensagem,
+                            data_envio: new Date().toISOString(),
+                            status: 'nova',
+                            origem: 'Site - Contato'
+                        });
+
+                        // ==========================================
+                        // 2. CAPTAÇÃO AUTOMÁTICA DE CLIENTES (CRM)
+                        // Lógica de Upsert: Atualiza se existir, cria se não existir. Seguro e sem erro de leitura!
+                        // ==========================================
+                        const telefoneLimpo = dados.telefone.replace(/\D/g, '');
+                        if (telefoneLimpo) {
+                            const clienteRef = doc(db, "clientes", telefoneLimpo);
+                            
+                            // O { merge: true } garante a atualização em vez de criar um duplicado
+                            await setDoc(clienteRef, {
+                                nome: dados.nome,
+                                telefone: dados.telefone,
+                                email: dados.email,
+                                ultimo_servico: `Contato: ${dados.assunto_selecionado}`,
+                                data_atualizacao: new Date().toISOString()
+                            }, { merge: true });
+                        }
+
+                        // 3. Web3Forms (E-mail)
+                        fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(dados)
+                        });
+
+                        // 4. Notificação e WhatsApp
+                        if(typeof mostrarNotificacao === 'function') {
+                            mostrarNotificacao('Mensagem registada! Redirecionando para o WhatsApp...');
+                        }
+
+                        const textoWpp = `Olá Rodrigo! Vi o site da Xerfan Tech Lab e gostaria de falar com você.\n\n` +
+                                         `*Nome:* ${dados.nome}\n` +
+                                         `*Assunto:* ${dados.assunto_selecionado}\n` +
+                                         `*Mensagem:* ${dados.mensagem}`;
+                        
+                        const urlWpp = `https://wa.me/5521984197719?text=${encodeURIComponent(textoWpp)}`;
+
+                        setTimeout(() => {
+                            window.open(urlWpp, '_blank');
+                            formLead.reset();
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                        }, 1500);
+
+                    } catch (err) {
+                        console.error("Erro no envio:", err);
+                        if(typeof mostrarNotificacao === 'function') {
+                            mostrarNotificacao('Erro na conexão. Tente pelo WhatsApp.', 'error');
+                        }
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

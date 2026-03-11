@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Xerfan Tech Lab</title>
+    
+    <meta name="description" id="meta-description" content="Leia este artigo completo no blog da Xerfan Tech Lab.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" id="og-title" content="Artigo - Xerfan Tech Lab">
+    <meta property="og:description" id="og-description" content="Dicas, novidades e soluções em tecnologia e infraestrutura.">
+    <meta property="og:image" id="og-image" content="img/logo.png">
+    <meta property="og:site_name" content="Xerfan Tech Lab">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/enhancements.css" />
+    <link rel="icon" type="image/x-icon" href="img/logo.png" />
+    
+    <style> 
+        body { font-family: "Plus Jakarta Sans", sans-serif; } 
+        
+        /* CSS Refinado para garantir leitura perfeita de textos ricos do Admin */
+        #texto p { margin-bottom: 1.5rem; line-height: 1.8; color: #d1d5db; font-size: 1.125rem; }
+        #texto img { max-width: 100%; height: auto; border-radius: 1rem; margin: 2rem 0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); }
+        #texto h2, #texto h3 { color: white; font-weight: bold; margin-top: 2.5rem; margin-bottom: 1rem; }
+        #texto ul, #texto ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #d1d5db; font-size: 1.125rem; list-style-type: disc; }
+        #texto a { color: #f97316; text-decoration: underline; text-underline-offset: 4px; }
+        
+        /* Reserva de espaço para o Header dinâmico */
+        #header { min-height: 80px; display: block; }
+    </style>
+</head>
+<body class="bg-gray-950 transition-colors duration-300">
+    <div id="header"></div>
+
+    <div id="loader" class="container mx-auto px-4 max-w-3xl py-24 min-h-screen flex flex-col">
+        <div class="mb-10 w-32 h-4 bg-gray-800 rounded animate-pulse"></div>
+        <div class="flex flex-col items-center w-full animate-pulse">
+            <div class="h-6 bg-gray-800 rounded-full w-32 mb-8"></div>
+            <div class="h-12 bg-gray-800 rounded-xl w-3/4 mb-4"></div>
+            <div class="h-12 bg-gray-800 rounded-xl w-2/4 mb-10"></div>
+            <div class="w-full aspect-video bg-gray-800 rounded-3xl mb-12 border border-gray-700/30"></div>
+            <div class="w-full space-y-4">
+                <div class="h-4 bg-gray-800 rounded w-full"></div>
+                <div class="h-4 bg-gray-800 rounded w-full"></div>
+                <div class="h-4 bg-gray-800 rounded w-5/6"></div>
+                <div class="h-4 bg-gray-800 rounded w-full mt-4"></div>
+                <div class="h-4 bg-gray-800 rounded w-4/6"></div>
+            </div>
+        </div>
+    </div>
+
+    <main id="conteudo-principal" class="container mx-auto px-4 max-w-3xl py-24 min-h-screen hidden">
+        <div class="mb-10" data-aos="fade-up">
+            <a href="blog.html" class="inline-flex items-center text-orange-500 hover:text-orange-400 font-bold transition-all text-sm uppercase tracking-widest">
+                <i class="fas fa-arrow-left mr-2"></i> Voltar ao Blog
+            </a>
+        </div>
+        
+        <article id="post-content" data-aos="fade-up" data-aos-delay="100">
+            <header class="mb-10 text-center">
+                <p id="meta-info" class="inline-block bg-gray-800 text-gray-300 border border-gray-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-6">
+                    <i class="far fa-calendar-alt mr-2 text-orange-500"></i>--/--/----
+                </p>
+                <h1 id="titulo" class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight tracking-tight">Carregando...</h1>
+            </header>
+
+            <div class="w-full aspect-video bg-gray-900 rounded-3xl mb-12 overflow-hidden shadow-2xl border border-gray-800 relative">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-950/60 to-transparent pointer-events-none z-10"></div>
+                <img id="capa" class="w-full h-full object-cover relative z-0 hidden" alt="Capa do Artigo">
+            </div>
+
+            <div id="texto" class="space-y-2"></div>
+            
+            <div class="mt-16 pt-8 border-t border-gray-800 bg-gray-900/50 p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-1">Gostou do conteúdo?</h4>
+                    <p class="text-gray-400 text-sm">Fale conosco se precisar de soluções em tecnologia.</p>
+                </div>
+                <a href="https://wa.me/5521984197719?text=Olá! Li um artigo no blog da Xerfan Tech Lab e gostaria de conversar." target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-bold transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg shadow-green-500/20 whitespace-nowrap">
+                    <i class="fab fa-whatsapp text-lg"></i> Chamar no WhatsApp
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script type="module">
+        // Importação limpa do Firebase
+        import { db } from "./js/firebase-config.js";
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        async function init() {
+            // Sincroniza o carregamento dos componentes
+            if(typeof loadComponent === 'function') {
+                await Promise.all([
+                    loadComponent('header', 'components/header.html'),
+                    loadComponent('footer', 'components/footer.html')
+                ]);
+            }
+            AOS.init({ duration: 800, once: true });
+
+            const id = new URLSearchParams(window.location.search).get('id');
+            
+            if (id) {
+                try {
+                    const s = await getDoc(doc(db, "blog", id));
+                    
+                    if (s.exists()) {
+                        const p = s.data();
+                        
+                        // Atualiza a página e o SEO Dinâmico
+                        document.title = p.titulo + " - Blog Xerfan Tech Lab";
+                        document.getElementById('titulo').innerText = p.titulo;
+                        
+                        // Injeta os dados do Firebase nas Meta Tags de SEO
+                        document.getElementById('og-title')?.setAttribute('content', p.titulo);
+                        if(p.imagem) document.getElementById('og-image')?.setAttribute('content', p.imagem);
+                        
+                        let conteudoLimpo = p.conteudo || "";
+                        // Tira o HTML para colocar na descrição do Google
+                        let textoPuro = conteudoLimpo.replace(/<[^>]*>?/gm, ''); 
+                        if(textoPuro.length > 150) textoPuro = textoPuro.substring(0, 150) + "...";
+                        
+                        document.getElementById('meta-description')?.setAttribute('content', textoPuro);
+                        document.getElementById('og-description')?.setAttribute('content', textoPuro);
+                        
+                        // Data
+                        if(p.data) {
+                            const dataFormatada = new Date(p.data).toLocaleDateString('pt-BR');
+                            document.getElementById('meta-info').innerHTML = `<i class="far fa-calendar-alt mr-2 text-orange-500"></i> Publicado em ${dataFormatada}`;
+                        }
+                        
+                        // Capa
+                        const img = document.getElementById('capa');
+                        img.src = p.imagem;
+                        img.classList.remove('hidden');
+                        
+                        // Parse inteligente: se não tem HTML, converte quebras de linha
+                        let conteudoStr = p.conteudo || "";
+                        if (!conteudoStr.includes('<p>') && !conteudoStr.includes('<br>') && !conteudoStr.includes('<img')) {
+                            conteudoStr = conteudoStr.split('\n').map(t => t.trim() ? `<p>${t}</p>` : '').join('');
+                        }
+                        document.getElementById('texto').innerHTML = conteudoStr;
+
+                        // Esconde o Skeleton Loader e mostra o conteúdo
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('conteudo-principal').classList.remove('hidden');
+                    } else {
+                        mostrarErro();
+                    }
+                } catch(e) { 
+                    console.error(e); 
+                    mostrarErro();
+                }
+            } else {
+                mostrarErro();
+            }
+        }
+
+        function mostrarErro() {
+            document.getElementById('loader').innerHTML = `
+                <div class="text-center flex flex-col items-center justify-center min-h-[50vh]">
+                    <i class="fas fa-exclamation-circle text-5xl text-gray-600 mb-6"></i>
+                    <h2 class="text-2xl font-bold text-white mb-2">Artigo Não Encontrado</h2>
+                    <p class="text-gray-400 mb-8">Este artigo pode ter sido movido ou excluído.</p>
+                    <a href="blog.html" class="bg-gray-800 text-white px-8 py-3 rounded-xl border border-gray-700 hover:bg-gray-700 transition-colors font-bold">Voltar ao Blog</a>
+                </div>
+            `;
+        }
+
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
